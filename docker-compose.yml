@@ -1,0 +1,49 @@
+version: "3"
+services:
+  # apidocumentation:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/slateserver.Dockerfile
+  #   image: registry.le-corre.eu:5000/innerapi:slate-alpha-doc
+  #   volumes:
+  #     - "./swagger.yaml:/tmp/swagger"
+  #   ports:
+  #     - 4567:4567
+  back:
+    build:
+      context: .
+      dockerfile:  docker/gobase.Dockerfile
+    env_file: .env
+    depends_on:
+      - database
+    volumes:
+      - "./api:/go/src/github.com/titouanfreville/popcubeexternalapi/api"
+      - "./datastores:/go/src/github.com/titouanfreville/popcubeexternalapi/datastores"
+      - "./models:/go/src/github.com/titouanfreville/popcubeexternalapi/models"
+      - "./utils:/go/src/github.com/titouanfreville/popcubeexternalapi/utils"
+      - "./configs:/go/src/github.com/titouanfreville/popcubeexternalapi/configs"
+      - "./main.go:/go/src/github.com/titouanfreville/popcubeexternalapi/main.go"
+    image: registry.le-corre.eu:5000/externalapi:alpha
+    ports:
+      - 3000:3000
+  # golint:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/golint.Dockerfile
+  #   env_file: .env
+  #   volumes:
+  #     - "./api:/go/src/github.com/titouanfreville/popcubeexternalapi/api"
+  #     - "./datastores:/go/src/github.com/titouanfreville/popcubeexternalapi/datastores"
+  #     - "./models:/go/src/github.com/titouanfreville/popcubeexternalapi/models"
+  #     - "./utils:/go/src/github.com/titouanfreville/popcubeexternalapi/utils"
+  #     - "./configs:/go/src/github.com/titouanfreville/popcubeexternalapi/configs"
+  #     - "./main.go:/go/src/github.com/titouanfreville/popcubeexternalapi/main.go"
+  database:
+    image: mariadb:10.1
+    env_file: .env
+    hostname: database
+    ports:
+      - 3306:3306
+    # volumes :
+    #   - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #   - ./scripts/init_values.sql:/docker-entrypoint-initdb.d/init_values.sql
