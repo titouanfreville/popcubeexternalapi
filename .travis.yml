@@ -1,0 +1,46 @@
+sudo: required
+
+services:
+  - docker
+
+language: go
+
+env:
+    global:
+        - DOCKER_VERSION=1.13.1-0~ubuntu-trusty
+        - DOCKER_COMPOSE_VERSION=1.11.2
+
+before_install:
+  - apt-cache madison docker-engine
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+  - sudo rm -f /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+script:
+  - docker version
+  - docker-compose version
+  - docker login -u="$DOCKER_USER" -p="$DOCKER_PWD" $DOCKER_REGISTRY
+  - docker build -t go_base -f docker/gobase.Dockerfile .;
+  - docker build -t go_base -f docker/database.Dockerfile .;
+
+deploy:
+  # build-push develop to the staging environment
+  - provider: script
+    script: scripts/deploy.sh --branch=develop
+    on:
+      branch: develop
+  # build-push master to production
+  - provider: script
+    script: scripts/deploy.sh --branch=master
+    on:
+      branch: master
+  # build-push-deploy release to production
+  - provider: script
+    script: scripts/deploy.sh --tag=$TRAVIS_TAG --deploy=true
+    on:
+      tags: true
+
+notifications:
+  slack: societyco:T1mHeYKrOtopvRjIZ68MqOQo
