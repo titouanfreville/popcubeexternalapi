@@ -1,0 +1,79 @@
+{
+	"ImportPath": "github.com/titouanfreville/popcubeexternalapi",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/dgrijalva/jwt-go",
+			"Comment": "v3.0.0-17-g2268707",
+			"Rev": "2268707a8f0843315e2004ee4f1d021dc08baedf"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.3-6-g9dee4ca",
+			"Rev": "9dee4ca50b83acdf57a35fb9e6fb4be640afa2f3"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/gorm",
+			"Comment": "v1.0-138-g45ccb13",
+			"Rev": "45ccb134373e7d9fa76d5987a6fed6cd5a5adfd4"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "1c35d901db3da928c72a72d8458480cc9ade058f"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n",
+			"Comment": "v1.8.0-3-gf373441",
+			"Rev": "f373441d6d54a32891b2d8b1dbf99bc518f3d60d"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/bundle",
+			"Comment": "v1.8.0-3-gf373441",
+			"Rev": "f373441d6d54a32891b2d8b1dbf99bc518f3d60d"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/language",
+			"Comment": "v1.8.0-3-gf373441",
+			"Rev": "f373441d6d54a32891b2d8b1dbf99bc518f3d60d"
+		},
+		{
+			"ImportPath": "github.com/nicksnyder/go-i18n/i18n/translation",
+			"Comment": "v1.8.0-3-gf373441",
+			"Rev": "f373441d6d54a32891b2d8b1dbf99bc518f3d60d"
+		},
+		{
+			"ImportPath": "github.com/pelletier/go-buffruneio",
+			"Comment": "v0.2.0",
+			"Rev": "c37440a7cf42ac63b919c752ca73a85067e05992"
+		},
+		{
+			"ImportPath": "github.com/pelletier/go-toml",
+			"Comment": "v0.5.0-7-gfe206ef",
+			"Rev": "fe206efb84b2bc8e8cfafe6b4c1826622be969e3"
+		},
+		{
+			"ImportPath": "github.com/pressly/chi",
+			"Comment": "v2.1.0-1-g157587f",
+			"Rev": "157587f33c258f3590967dfc7be2e75c0aa1cdf3"
+		},
+		{
+			"ImportPath": "github.com/pressly/chi/middleware",
+			"Comment": "v2.1.0-1-g157587f",
+			"Rev": "157587f33c258f3590967dfc7be2e75c0aa1cdf3"
+		},
+		{
+			"ImportPath": "github.com/pressly/chi/render",
+			"Comment": "v2.1.0-1-g157587f",
+			"Rev": "157587f33c258f3590967dfc7be2e75c0aa1cdf3"
+		},
+		{
+			"ImportPath": "github.com/unrolled/render",
+			"Rev": "50716a0a853771bb36bfce61a45cdefdb98c2e6e"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Rev": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
+		}
+	]
+}
