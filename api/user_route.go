@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/pressly/chi"
+	chiRender "github.com/pressly/chi/render"
 	"github.com/titouanfreville/popcubeexternalapi/datastores"
 	"github.com/titouanfreville/popcubeexternalapi/models"
 )
@@ -22,8 +23,8 @@ const (
 
 func initUserRoute(router chi.Router) {
 	router.Route("/user", func(r chi.Router) {
-		r.Use(tokenAuth.Verifier)
-		r.Use(Authenticator)
+		// r.Use(tokenAuth.Verifier)
+		// r.Use(Authenticator)
 		// swagger:route GET /user Users getAllUser
 		//
 		// Get users
@@ -46,7 +47,7 @@ func initUserRoute(router chi.Router) {
 		// 	  422: wrongEntity
 		// 	  503: databaseError
 		// 	  default: genericError
-		// r.Post("/", newUser)
+		r.Post("/", newUser)
 		// swagger:route POST /user/invite Users inviteUser
 		//
 		// Invite user
@@ -370,35 +371,35 @@ func getOrderedByDate(w http.ResponseWriter, r *http.Request) {
 // 	render.JSON(w, 200, role)
 // }
 
-// func newUser(w http.ResponseWriter, r *http.Request) {
-// 	var User models.User
-// 	store := datastores.Store()
-// 	token := r.Context().Value(jwtTokenKey).(*jwt.Token)
-// 	if !canManageUser("global", false, "", token) {
-// 		res := error401
-// 		res.Message = "You don't have the right to manage user."
-// 		render.JSON(w, error401.StatusCode, error401)
-// 		return
-// 	}
-// 	db := dbStore.db
+func newUser(w http.ResponseWriter, r *http.Request) {
+	var User models.User
+	store := datastores.Store()
+	// token := r.Context().Value(jwtTokenKey).(*jwt.Token)
+	// if !canManageUser("global", false, "", token) {
+	// 	res := error401
+	// 	res.Message = "You don't have the right to manage user."
+	// 	render.JSON(w, error401.StatusCode, error401)
+	// 	return
+	// }
+	db := dbStore.db
 
-// 	err := chiRender.Bind(r, &User)
-// 	if err != nil || User == (models.User{}) {
-// 		render.JSON(w, error422.StatusCode, error422)
-// 		return
-// 	}
-// 	if err := db.DB().Ping(); err != nil {
-// 		render.JSON(w, error503.StatusCode, error503)
-// 		return
-// 	}
-// 	apperr := store.User().Save(&User, db)
-// 	if err == nil {
-// 		render.JSON(w, 201, User)
-// 		return
-// 	}
-// 	render.JSON(w, apperr.StatusCode, apperr)
+	err := chiRender.Bind(r, &User)
+	if err != nil {
+		render.JSON(w, error422.StatusCode, error422)
+		return
+	}
+	if err := db.DB().Ping(); err != nil {
+		render.JSON(w, error503.StatusCode, error503)
+		return
+	}
+	apperr := store.User().Save(&User, db)
+	if err == nil {
+		render.JSON(w, 201, User)
+		return
+	}
+	render.JSON(w, apperr.StatusCode, apperr)
 
-// }
+}
 
 // inviteUser request
 // type inviteUserRequest struct {

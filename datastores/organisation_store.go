@@ -16,7 +16,6 @@ func (s StoreImpl) Organisation() OrganisationStore {
 
 // Save Use to save data in BB
 func (osi OrganisationStoreImpl) Save(organisation *models.Organisation, db *gorm.DB) *u.AppError {
-
 	transaction := db.Begin()
 	organisation.PreSave()
 	if appError := organisation.IsValid(); appError != nil {
@@ -57,8 +56,22 @@ func (osi OrganisationStoreImpl) Update(organisation *models.Organisation, newOr
 }
 
 // Get Used to get organisation from DB
-func (osi OrganisationStoreImpl) Get(db *gorm.DB) models.Organisation {
+func (osi OrganisationStoreImpl) Get(db *gorm.DB) []models.Organisation {
+	organisation := []models.Organisation{}
+	db.Find(&organisation)
+	return organisation
+}
+
+// GeByName Used to get organisation from DB
+func (osi OrganisationStoreImpl) GeByName(name string, db *gorm.DB) models.Organisation {
 	organisation := models.EmptyOrganisation
 	db.First(&organisation)
+	return organisation
+}
+
+// GetByID Used to get organisation from DB
+func (osi OrganisationStoreImpl) GetByID(ID uint64, db *gorm.DB) models.Organisation {
+	organisation := models.EmptyOrganisation
+	db.Where("idOrganisation = ?", ID).First(&organisation)
 	return organisation
 }

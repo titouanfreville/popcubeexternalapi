@@ -14,9 +14,9 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/pressly/chi"
 	"github.com/pressly/chi/middleware"
-	"github.com/titouanfreville/popcubeapi/models"
 	"github.com/titouanfreville/popcubeexternalapi/configs"
 	"github.com/titouanfreville/popcubeexternalapi/datastores"
+	"github.com/titouanfreville/popcubeexternalapi/models"
 	"github.com/titouanfreville/popcubeexternalapi/utils"
 	renderPackage "github.com/unrolled/render"
 )
@@ -75,7 +75,6 @@ func generateNewOrganisationToken(organisation models.Organisation, owner models
 		"public":              organisation.Public,
 		"owner":               owner.Username,
 		"owner_mail":          owner.Email,
-		"owner_password":      owner.Password,
 		"type":                "neworganisation",
 		"authorise":           "this token let you create new organisation and a new user in an iner DB",
 		"randomValue":         newRandomString(20),
@@ -160,7 +159,7 @@ func apiVersionContext(version string) func(next http.Handler) http.Handler {
 
 // basicRoutes set basic routes for the API
 func basicRoutes(router *chi.Mux) {
-	router.Use(tokenAuth.Verifier)
+	// router.Use(tokenAuth.Verifier)
 	// swagger:route GET / Test hello
 	//
 	// Hello World
@@ -416,7 +415,7 @@ func StartAPI(hostname string, port string, DbConnectionInfo *configs.DbConnecti
 	host := DbConnectionInfo.Host
 	dbport := DbConnectionInfo.Port
 	dbStore.db = datastores.Store().InitConnection(user, db, pass, host, dbport)
-	initAuth()
+	// initAuth()
 	initMiddleware(router)
 	basicRoutes(router)
 	initVersionRouting(router)

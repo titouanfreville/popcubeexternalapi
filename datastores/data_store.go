@@ -79,7 +79,9 @@ Delete is useless as we will down the docker stack in case an organisation leace
 type OrganisationStore interface {
 	Save(organisation *models.Organisation, db *gorm.DB) *u.AppError
 	Update(organisation *models.Organisation, newOrganisation *models.Organisation, db *gorm.DB) *u.AppError
-	Get(db *gorm.DB) models.Organisation
+	Get(db *gorm.DB) []models.Organisation
+	GetByID(ID uint64, db *gorm.DB) models.Organisation
+	GeByName(name string, db *gorm.DB) models.Organisation
 }
 
 /*UserStore interface the user communication*/

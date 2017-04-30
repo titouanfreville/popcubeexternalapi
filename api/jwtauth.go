@@ -12,7 +12,6 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/titouanfreville/popcubeexternalapi/datastores"
 )
 
 var (
@@ -268,18 +267,18 @@ func allowUserCreationFromToken(next http.Handler) http.Handler {
 			return
 		}
 
-		tokenOrganisation, ok := jwtToken.Claims.(jwt.MapClaims)["organisation"].(string)
+		// tokenOrganisation, ok := jwtToken.Claims.(jwt.MapClaims)["organisation"].(string)
 
-		if !ok {
-			render.JSON(w, 401, "Token is not valid. Organisation is undifined")
-			return
-		}
-		apiOrganisation := datastores.Store().Organisation().Get(dbStore.db)
+		// if !ok {
+		// render.JSON(w, 401, "Token is not valid. Organisation is undifined")
+		// return
+		// }
+		// apiOrganisation := datastores.Store().Organisation().Get(dbStore.db)
 
-		if tokenOrganisation != apiOrganisation.OrganisationName {
-			render.JSON(w, 401, "Token is not valid. Organisation does not match current organsisation")
-			return
-		}
+		// if tokenOrganisation != apiOrganisation.OrganisationName {
+		// 	render.JSON(w, 401, "Token is not valid. Organisation does not match current organsisation")
+		// 	return
+		// }
 		// Token is authenticated, pass it through
 		next.ServeHTTP(w, r)
 	})

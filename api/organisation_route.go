@@ -17,8 +17,8 @@ const (
 
 func initOrganisationRoute(router chi.Router) {
 	router.Route("/organisation", func(r chi.Router) {
-		r.Use(tokenAuth.Verifier)
-		r.Use(Authenticator)
+		// r.Use(tokenAuth.Verifier)
+		// r.Use(Authenticator)
 		// swagger:route GET /organisation Organisations getAllOrganisation
 		//
 		// Get organisations
@@ -93,10 +93,10 @@ func initOrganisationRoute(router chi.Router) {
 
 func organisationContext(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, err := strconv.ParseUint(chi.URLParam(r, "organisationID"), 10, 64)
+		id, err := strconv.ParseUint(chi.URLParam(r, "organisationID"), 10, 64)
 		oldOrganisation := models.EmptyOrganisation
 		if err == nil {
-			oldOrganisation = datastores.Store().Organisation().Get(dbStore.db)
+			oldOrganisation = datastores.Store().Organisation().GetByID(id, dbStore.db)
 		}
 		ctx := context.WithValue(r.Context(), oldOrganisationKey, oldOrganisation)
 		next.ServeHTTP(w, r.WithContext(ctx))
