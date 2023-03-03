@@ -25,22 +25,5 @@ script:
   - docker build -t go_base -f docker/gobase.Dockerfile .;
   - docker build -t go_base -f docker/database.Dockerfile .;
 
-deploy:
-  # build-push develop to the staging environment
-  - provider: script
-    script: scripts/deploy.sh --branch=develop
-    on:
-      branch: develop
-  # build-push master to production
-  - provider: script
-    script: scripts/deploy.sh --branch=master
-    on:
-      branch: master
-  # build-push-deploy release to production
-  - provider: script
-    script: scripts/deploy.sh --tag=$TRAVIS_TAG --deploy=true
-    on:
-      tags: true
-
 notifications:
   slack: societyco:T1mHeYKrOtopvRjIZ68MqOQo
